@@ -1,4 +1,4 @@
-name: Build & Release APK
+name: Build & Release TBox
 on:
   push:
     branches: [main, master]
@@ -19,6 +19,8 @@ jobs:
           java-version: 17
       - run: npm install
       - run: npx cap add android
+      - name: Pasang ikon aplikasi
+        run: cp -r icon/res/* android/app/src/main/res/
       - run: npx cap sync android
       - name: Pakai keystore tetap (agar update bisa menimpa versi lama)
         run: |
@@ -39,15 +41,15 @@ jobs:
           done
           exit 1
       - name: Ganti nama APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk SandboxSerbuk-v1.0.${{ github.run_number }}.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk TBox-v1.0.${{ github.run_number }}.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: SandboxSerbuk-APK
-          path: SandboxSerbuk-v1.0.${{ github.run_number }}.apk
+          name: TBox-APK
+          path: TBox-v1.0.${{ github.run_number }}.apk
       - name: Auto Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
-          name: Sandbox Serbuk v1.0.${{ github.run_number }}
+          name: TBox v1.0.${{ github.run_number }}
           generate_release_notes: true
-          files: SandboxSerbuk-v1.0.${{ github.run_number }}.apk
+          files: TBox-v1.0.${{ github.run_number }}.apk

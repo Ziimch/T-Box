@@ -1,5 +1,6 @@
 {
   "appId": "com.sandbox.serbuk",
-  "appName": "Sandbox Serbuk",
-  "webDir": "www"
+  "appName": "TBox",
+  "webDir": "www",
+  "backgroundColor": "#000000"
 }
