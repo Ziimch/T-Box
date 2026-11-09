@@ -32,7 +32,12 @@ jobs:
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          sed -i 's/networkTimeout=.*/networkTimeout=180000/' gradle/wrapper/gradle-wrapper.properties
+          for i in 1 2 3 4; do
+            ./gradlew assembleDebug --no-daemon && exit 0
+            echo "Percobaan $i gagal, mengulang..."; sleep 15
+          done
+          exit 1
       - name: Ganti nama APK
         run: cp android/app/build/outputs/apk/debug/app-debug.apk SandboxSerbuk-v1.0.${{ github.run_number }}.apk
       - uses: actions/upload-artifact@v4
